@@ -23,8 +23,6 @@ export class venderController{
   // GET /vendors/:vendorId: Retrieve a specific vendor's details.
   @Get(':vendorId')
   async getVendorById(@Param('vendorId') vendorId: string) {
-    console.log("yyyyyyyyyyyyy")
-    console.log(vendorId)
     return this._venderService.findVender(vendorId);
   }
 
@@ -39,5 +37,10 @@ export class venderController{
   async deleteVendorById(@Param('vendorId') vendorId: string) {
     // Implement vendor deletion logic here.
     return this._venderService.deleteVender(vendorId)
+  }
+
+  @Get('/performance/:vendorId')
+  async vendorPerformance(@Param('vendorId') vendorId: string){
+    return this._venderService.getVendorPerformance(vendorId);
   }
 }

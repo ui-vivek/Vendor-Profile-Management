@@ -30,4 +30,9 @@ export class OrdersController {
   async deletePurchaseOrder(@Param('poId') poId: string): Promise<void> {
     return await this._ordersService.deletePurchaseOrder(poId);
   }
+
+  @Post('acknowledge/:poId')
+  async acknowledgePurchaseOrder(@Param('poId') poId: string) {
+  return await this._ordersService.updatePurchaseOrder(poId,{acknowledgmentDate : new Date()});
+}
 }

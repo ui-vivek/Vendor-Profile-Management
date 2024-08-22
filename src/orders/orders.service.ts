@@ -3,10 +3,11 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { PurchaseOrder } from "src/models/Orders.model";
 import * as mongoose from 'mongoose';
+import { HistoricalVendorPerformance } from "src/models/Performance.model";
 
 @Injectable()
 export class OrdersService {
-    constructor(@InjectModel('PurchaseOrder') private readonly PurchaseOrderModel: Model<PurchaseOrder>,){}
+    constructor(@InjectModel('PurchaseOrder') private readonly PurchaseOrderModel: Model<PurchaseOrder>,@InjectModel('HistoricalVendorPerformance') private readonly HistoricalVendorPerformance: Model<HistoricalVendorPerformance>,){}
 
 
   async createPurchaseOrder(purchaseOrderData: PurchaseOrder): Promise<PurchaseOrder> {
@@ -42,18 +43,19 @@ export class OrdersService {
     const purchaseOrder = await this.PurchaseOrderModel.findOne({ poNumber: poId });
 
     if (!purchaseOrder) {
-      return null; // Or throw an error if you prefer
+      return null; 
     }
 
-    // Update the purchase order properties based on the DTO
     purchaseOrder.status = updatePurchaseOrderDto.status;
-    // ... update other properties as needed
 
-    // return this.PurchaseOrderModel.save(purchaseOrder);
+    if(updatePurchaseOrderDto.acknowledgmentDate)
+        purchaseOrder.acknowledgmentDate = updatePurchaseOrderDto.acknowledgmentDate;
     return this.PurchaseOrderModel.findByIdAndUpdate(purchaseOrder._id, purchaseOrder, { new: true });
   }
 
   async deletePurchaseOrder(poId: string): Promise<void> {
     await this.PurchaseOrderModel.findOneAndDelete({ poNumber: poId });
   }
+
+
 }
