@@ -59,7 +59,7 @@ $ npm run test:cov
 ```
 
 ## APIs
-Here's the documentation for the `POST /vendors` API in a README file format:
+Here's the documentation for the `POST http://localhost:3000/vendors` API in a README file format:
 
 ---
 
@@ -105,7 +105,9 @@ The request body should be in JSON format and include the following fields:
   "onTimeDeliveryRate": 95.5,
   "qualityRatingAvg": 4.7,
   "averageResponseTime": 2.3,
-  "fulfillmentRate": 98.2
+  "fulfillmentRate": 98.2,
+  "_id": "66c6d215391b11e212699b77",
+  "__v": 0
 }
 ```
 
@@ -130,6 +132,242 @@ The request body should be in JSON format and include the following fields:
 
 This documentation provides the necessary details for consuming the `POST /vendors` API, including request structure and example responses.
 
-## License
+Here's the documentation for the `GET /vendors` API in a concise format:
 
-Nest is [MIT licensed](LICENSE).
+---
+
+## GET /vendors
+
+**Description:**
+
+Fetches a list of all vendors.
+
+**Request URL:**
+
+`/vendors`
+
+**Method:**
+
+`GET`
+
+**Response:**
+
+- **200 OK:** Returns a list of vendors.
+
+**Example Response:**
+
+```json
+[
+    {
+        "_id": "66c6d215391b11e212699b77",
+        "name": "Vendor XYZ",
+        "contactDetails": "+1-234-567-890",
+        "address": "123 Vendor St, City, Country",
+        "vendorCode": "VEND123",
+        "onTimeDeliveryRate": 95.5,
+        "qualityRatingAvg": 4.7,
+        "averageResponseTime": 2.3,
+        "fulfillmentRate": 98.2,
+        "__v": 0
+    }
+]
+```
+
+**Fields:**
+
+- `_id`: Unique identifier for the vendor.
+- `name`: Vendor's name.
+- `contactDetails`: Vendor's contact information.
+- `address`: Physical address of the vendor.
+- `vendorCode`: Unique identifier for the vendor.
+- `onTimeDeliveryRate`: Percentage of on-time deliveries.
+- `qualityRatingAvg`: Average quality rating based on purchase orders.
+- `averageResponseTime`: Average time to acknowledge purchase orders.
+- `fulfillmentRate`: Percentage of successfully fulfilled purchase orders.
+- `createdAt`: Timestamp when the vendor was created.
+- `__v`: Version key.
+
+--- 
+
+This summary provides the key details for the `GET /vendors` API.
+
+Here's the documentation for the `GET /vendors/:vendorId` API:
+
+---
+
+## GET /vendors/:vendorId
+
+**Description:**
+
+Retrieve details of a specific vendor by their unique ID.
+
+**Request URL:**
+
+`/vendors/:vendorId`
+
+**Method:**
+
+`GET`
+
+**URL Parameter:**
+
+- `vendorId`: The unique ID of the vendor to retrieve.
+
+**Example Request:**
+
+`GET http://localhost:3000/vendors/66c6d215391b11e212699b77`
+
+**Response:**
+
+- **200 OK:** Returns the details of the specified vendor.
+- **404 Not Found:** Vendor with the given ID does not exist.
+
+**Example Response:**
+
+```json
+{
+    "_id": "66c6d215391b11e212699b77",
+    "name": "Vendor XYZ",
+    "contactDetails": "+1-234-567-890",
+    "address": "123 Vendor St, City, Country",
+    "vendorCode": "VEND123",
+    "onTimeDeliveryRate": 95.5,
+    "qualityRatingAvg": 4.7,
+    "averageResponseTime": 2.3,
+    "fulfillmentRate": 98.2,
+    "__v": 0
+}
+```
+
+**Fields:**
+
+- `_id`: Unique identifier for the vendor.
+- `name`: Vendor's name.
+- `contactDetails`: Vendor's contact information.
+- `address`: Physical address of the vendor.
+- `vendorCode`: Unique identifier for the vendor.
+- `onTimeDeliveryRate`: Percentage of on-time deliveries.
+- `qualityRatingAvg`: Average quality rating based on purchase orders.
+- `averageResponseTime`: Average time to acknowledge purchase orders.
+- `fulfillmentRate`: Percentage of successfully fulfilled purchase orders.
+- `__v`: Version key.
+
+---
+
+This documentation provides the necessary details for using the `GET /vendors/:vendorId` API to retrieve specific vendor details.
+
+Here's the documentation for the `PUT /vendors/66c6d215391b11e212699b77` API:
+
+---
+
+## PUT /vendors/:vendorId
+
+**Description:**
+
+Update the details of an existing vendor by their unique ID.
+
+**Request URL:**
+
+`/vendors/:vendorId`
+
+**Method:**
+
+`PUT`
+
+**URL Parameter:**
+
+- `vendorId`: The unique ID of the vendor to update.
+
+**Request Body:**
+
+The request body should be in JSON format and may include the following fields:
+
+| Field                  | Type   | Description                                                         |
+|------------------------|--------|---------------------------------------------------------------------|
+| `name`                 | String | **Optional.** The updated name of the vendor.                       |
+| `contactDetails`       | String | **Optional.** The updated contact information of the vendor.        |
+| `address`              | String | **Optional.** The updated physical address of the vendor.           |
+| `vendorCode`           | String | **Optional.** The updated unique identifier for the vendor.         |
+| `onTimeDeliveryRate`   | Number | **Optional.** Updated percentage of on-time deliveries.             |
+| `qualityRatingAvg`     | Number | **Optional.** Updated average quality rating based on purchase orders.  |
+| `averageResponseTime`  | Number | **Optional.** Updated average time to acknowledge purchase orders.  |
+| `fulfillmentRate`      | Number | **Optional.** Updated percentage of successfully fulfilled purchase orders. |
+
+**Example Request:**
+
+```json
+{
+    "name": "Updated Vendor XYZ",
+    "contactDetails": "+1-987-654-3210",
+    "address": "456 New Vendor St, New City, Country",
+    "onTimeDeliveryRate": 96.0,
+    "qualityRatingAvg": 4.8
+}
+```
+
+**Response:**
+
+- **200 OK:** Vendor updated successfully.
+- **400 Bad Request:** Invalid input or missing required fields.
+- **404 Not Found:** Vendor with the given ID does not exist.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+    "id": "66c6d215391b11e212699b77",
+    "status": "Vendor updated successfully"
+}
+```
+
+---
+
+This documentation provides the key details for using the `PUT /vendors/66c6d215391b11e212699b77` API to update vendor information.
+
+
+Here's the documentation for the `DELETE /vendors/:vendorId` API:
+
+---
+
+## DELETE /vendors/:vendorId
+
+**Description:**
+
+Delete an existing vendor by their unique ID.
+
+**Request URL:**
+
+`/vendors/:vendorId`
+
+**Method:**
+
+`DELETE`
+
+**URL Parameter:**
+
+- `vendorId`: The unique ID of the vendor to delete.
+
+**Example Request:**
+
+`DELETE http://localhost:3000/vendors/66c6d215391b11e212699b77`
+
+**Response:**
+
+- **200 OK:** Vendor deleted successfully.
+- **404 Not Found:** Vendor with the given ID does not exist.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+    "id": "66c6d215391b11e212699b77",
+    "status": "Vendor deleted successfully"
+}
+```
+
+---
+
+This documentation covers the details for using the `DELETE /vendors/:vendorId` API to remove a vendor from the system.
+
