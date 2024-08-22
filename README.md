@@ -371,3 +371,381 @@ Delete an existing vendor by their unique ID.
 
 This documentation covers the details for using the `DELETE /vendors/:vendorId` API to remove a vendor from the system.
 
+Here's the documentation for the `POST /purchase-orders` API:
+
+---
+
+## POST /purchase-orders
+
+**Description:**
+
+Create a new purchase order.
+
+**Request URL:**
+
+`/purchase-orders`
+
+**Method:**
+
+`POST`
+
+**Request Body:**
+
+The request body should be in JSON format and include the following fields:
+
+| Field                | Type    | Description                                                             |
+|----------------------|---------|-------------------------------------------------------------------------|
+| `poNumber`           | String  | **Required.** The purchase order number.                                |
+| `vendor`             | String  | **Required.** The unique ID of the vendor.                              |
+| `orderDate`          | String  | **Required.** The date the purchase order was created (ISO 8601 format).|
+| `deliveryDate`       | String  | **Required.** The expected delivery date (ISO 8601 format).             |
+| `items`              | Array   | **Required.** List of items included in the order.                      |
+| `items[].itemId`     | String  | **Required.** Unique identifier for the item.                           |
+| `items[].description`| String  | **Required.** Description of the item.                                  |
+| `items[].unitPrice`  | Number  | **Required.** Price per unit of the item.                               |
+| `items[].quantity`   | Number  | **Required.** Quantity of the item ordered.                             |
+| `quantity`           | Number  | **Required.** Total quantity of items in the purchase order.            |
+| `status`             | String  | **Required.** Current status of the purchase order (e.g., pending, completed). |
+| `qualityRating`      | Number  | **Optional.** Rating of the order's quality.                            |
+| `issueDate`          | String  | **Required.** Date the purchase order was issued (ISO 8601 format).     |
+| `acknowledgmentDate` | String  | **Optional.** Date the purchase order was acknowledged (ISO 8601 format).|
+
+**Example Request:**
+
+```json
+{
+  "poNumber": "PO123456788",
+  "vendor": "66c5e24b492a951b03afec60",
+  "orderDate": "2024-08-01T10:30:00Z",
+  "deliveryDate": "2024-08-15T10:30:00Z",
+  "items": [
+    {
+      "itemId": "ITEM001",
+      "description": "High-quality steel rods",
+      "unitPrice": 50.0,
+      "quantity": 100
+    },
+    {
+      "itemId": "ITEM002",
+      "description": "Industrial-grade screws",
+      "unitPrice": 0.10,
+      "quantity": 1000
+    }
+  ],
+  "quantity": 1100,
+  "status": "completed",
+  "qualityRating": 4.8,
+  "issueDate": "2024-08-01T09:00:00Z",
+  "acknowledgmentDate": "2024-08-01T11:00:00Z"
+}
+```
+
+**Response:**
+
+- **201 Created:** Purchase order created successfully.
+- **400 Bad Request:** Invalid input or missing required fields.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+    "id": "66c7d214490a17e2136f45d6",
+    "status": "Purchase order created successfully"
+}
+```
+
+---
+
+This documentation outlines the details for creating a purchase order using the `POST /purchase-orders` API.
+
+Here's the documentation for the `GET /purchase-orders` API:
+
+---
+
+## GET /purchase-orders
+
+**Description:**
+
+Retrieve a list of all purchase orders.
+
+**Request URL:**
+
+`/purchase-orders`
+
+**Method:**
+
+`GET`
+
+**Response:**
+
+- **200 OK:** Returns a list of purchase orders.
+
+**Example Response:**
+
+```json
+[
+    {
+        "_id": "66c6d948391b11e212699b7d",
+        "poNumber": "PO123456788",
+        "vendor": "66c5e24b492a951b03afec60",
+        "orderDate": "2024-08-01T10:30:00.000Z",
+        "deliveryDate": "2024-08-15T10:30:00.000Z",
+        "items": [
+            {
+                "itemId": "ITEM001",
+                "description": "High-quality steel rods",
+                "unitPrice": 50,
+                "quantity": 100
+            },
+            {
+                "itemId": "ITEM002",
+                "description": "Industrial-grade screws",
+                "unitPrice": 0.1,
+                "quantity": 1000
+            }
+        ],
+        "quantity": 1100,
+        "status": "completed",
+        "qualityRating": 4.8,
+        "issueDate": "2024-08-01T09:00:00.000Z",
+        "acknowledgmentDate": "2024-08-01T11:00:00.000Z",
+        "__v": 0
+    }
+]
+```
+
+**Fields:**
+
+- `_id`: Unique identifier for the purchase order.
+- `poNumber`: The purchase order number.
+- `vendor`: The unique ID of the vendor associated with the order.
+- `orderDate`: The date the purchase order was created (ISO 8601 format).
+- `deliveryDate`: The expected delivery date (ISO 8601 format).
+- `items`: List of items included in the order.
+- `quantity`: Total quantity of items in the purchase order.
+- `status`: Current status of the purchase order.
+- `qualityRating`: Rating of the order's quality.
+- `issueDate`: Date the purchase order was issued (ISO 8601 format).
+- `acknowledgmentDate`: Date the purchase order was acknowledged (ISO 8601 format).
+- `__v`: Version key.
+
+---
+
+This documentation provides the details for retrieving all purchase orders using the `GET /purchase-orders` API.
+
+Here's the documentation for the `GET /purchase-orders/:poNumber` API:
+
+---
+
+## GET /purchase-orders/:poNumber
+
+**Description:**
+
+Retrieve details of a specific purchase order by its purchase order number.
+
+**Request URL:**
+
+`/purchase-orders/:poNumber`
+
+**Method:**
+
+`GET`
+
+**URL Parameter:**
+
+- `poNumber`: The purchase order number of the order to retrieve.
+
+**Example Request:**
+
+`GET http://localhost:3000/purchase-orders/PO123456788`
+
+**Response:**
+
+- **200 OK:** Returns the details of the specified purchase order.
+- **404 Not Found:** Purchase order with the given number does not exist.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+    "_id": "66c6d948391b11e212699b7d",
+    "poNumber": "PO123456788",
+    "vendor": "66c5e24b492a951b03afec60",
+    "orderDate": "2024-08-01T10:30:00.000Z",
+    "deliveryDate": "2024-08-15T10:30:00.000Z",
+    "items": [
+        {
+            "itemId": "ITEM001",
+            "description": "High-quality steel rods",
+            "unitPrice": 50,
+            "quantity": 100
+        },
+        {
+            "itemId": "ITEM002",
+            "description": "Industrial-grade screws",
+            "unitPrice": 0.1,
+            "quantity": 1000
+        }
+    ],
+    "quantity": 1100,
+    "status": "completed",
+    "qualityRating": 4.8,
+    "issueDate": "2024-08-01T09:00:00.000Z",
+    "acknowledgmentDate": "2024-08-01T11:00:00.000Z",
+    "__v": 0
+}
+```
+
+**Fields:**
+
+- `_id`: Unique identifier for the purchase order.
+- `poNumber`: The purchase order number.
+- `vendor`: The unique ID of the vendor associated with the order.
+- `orderDate`: The date the purchase order was created (ISO 8601 format).
+- `deliveryDate`: The expected delivery date (ISO 8601 format).
+- `items`: List of items included in the order.
+- `quantity`: Total quantity of items in the purchase order.
+- `status`: Current status of the purchase order.
+- `qualityRating`: Rating of the order's quality.
+- `issueDate`: Date the purchase order was issued (ISO 8601 format).
+- `acknowledgmentDate`: Date the purchase order was acknowledged (ISO 8601 format).
+- `__v`: Version key.
+
+---
+
+This documentation provides the details for retrieving a specific purchase order using the `GET /purchase-orders/:poNumber` API.
+
+
+Here's the documentation for the `PUT /purchase-orders/:poId` API:
+
+---
+
+## PUT /purchase-orders/:poId
+
+**Description:**
+
+Update the details of an existing purchase order by its unique ID.
+
+**Request URL:**
+
+`/purchase-orders/:poId`
+
+**Method:**
+
+`PUT`
+
+**URL Parameter:**
+
+- `poId`: The unique ID of the purchase order to update.
+
+**Request Body:**
+
+The request body should be in JSON format and may include the following fields:
+
+| Field                | Type    | Description                                                             |
+|----------------------|---------|-------------------------------------------------------------------------|
+| `poNumber`           | String  | **Optional.** The updated purchase order number.                        |
+| `vendor`             | String  | **Optional.** The updated unique ID of the vendor.                      |
+| `orderDate`          | String  | **Optional.** The updated date the purchase order was created (ISO 8601 format). |
+| `deliveryDate`       | String  | **Optional.** The updated expected delivery date (ISO 8601 format).     |
+| `items`              | Array   | **Optional.** Updated list of items included in the order.              |
+| `items[].itemId`     | String  | **Optional.** Unique identifier for the item.                           |
+| `items[].description`| String  | **Optional.** Description of the item.                                  |
+| `items[].unitPrice`  | Number  | **Optional.** Price per unit of the item.                               |
+| `items[].quantity`   | Number  | **Optional.** Quantity of the item ordered.                             |
+| `quantity`           | Number  | **Optional.** Updated total quantity of items in the purchase order.    |
+| `status`             | String  | **Optional.** Updated current status of the purchase order.              |
+| `qualityRating`      | Number  | **Optional.** Updated rating of the order's quality.                    |
+| `issueDate`          | String  | **Optional.** Updated date the purchase order was issued (ISO 8601 format). |
+| `acknowledgmentDate` | String  | **Optional.** Updated date the purchase order was acknowledged (ISO 8601 format).|
+
+**Example Request:**
+
+```json
+{
+  "poNumber": "PO123456788",
+  "vendor": "66c5e24b492a951b03afec60",
+  "orderDate": "2024-08-01T10:30:00Z",
+  "deliveryDate": "2024-08-20T10:30:00Z",
+  "items": [
+    {
+      "itemId": "ITEM001",
+      "description": "High-quality steel rods",
+      "unitPrice": 55.0,
+      "quantity": 100
+    }
+  ],
+  "quantity": 100,
+  "status": "pending",
+  "qualityRating": 4.7,
+  "issueDate": "2024-08-01T09:00:00Z",
+  "acknowledgmentDate": "2024-08-02T11:00:00Z"
+}
+```
+
+**Response:**
+
+- **200 OK:** Purchase order updated successfully.
+- **400 Bad Request:** Invalid input or missing required fields.
+- **404 Not Found:** Purchase order with the given ID does not exist.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+    "id": "66c6d948391b11e212699b7d",
+    "status": "Purchase order updated successfully"
+}
+```
+
+---
+
+This documentation provides the details for updating a purchase order using the `PUT /purchase-orders/:poId` API.
+
+Here's the documentation for the `DELETE /purchase-orders/:poId` API:
+
+---
+
+## DELETE /purchase-orders/:poId
+
+**Description:**
+
+Delete an existing purchase order by its unique ID.
+
+**Request URL:**
+
+`/purchase-orders/:poId`
+
+**Method:**
+
+`DELETE`
+
+**URL Parameter:**
+
+- `poId`: The unique ID of the purchase order to delete.
+
+**Example Request:**
+
+`DELETE http://localhost:3000/purchase-orders/66c6d948391b11e212699b7d`
+
+**Response:**
+
+- **200 OK:** Purchase order deleted successfully.
+- **404 Not Found:** Purchase order with the given ID does not exist.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+    "id": "66c6d948391b11e212699b7d",
+    "status": "Purchase order deleted successfully"
+}
+```
+
+---
+
+This documentation provides the details for deleting a purchase order using the `DELETE /purchase-orders/:poId` API.
