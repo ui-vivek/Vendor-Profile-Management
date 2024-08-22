@@ -58,15 +58,77 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
-## Support
+## APIs
+Here's the documentation for the `POST /vendors` API in a README file format:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+---
 
-## Stay in touch
+## API Documentation
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### POST /vendors
+
+**Description:**
+
+Creates a new vendor in the system.
+
+**Request URL:**
+
+`/vendors`
+
+**Method:**
+
+`POST`
+
+**Request Body:**
+
+The request body should be in JSON format and include the following fields:
+
+| Field                  | Type   | Description                                                         |
+|------------------------|--------|---------------------------------------------------------------------|
+| `name`                 | String | **Required.** The name of the vendor.                               |
+| `contactDetails`       | String | **Required.** The contact information of the vendor.                |
+| `address`              | String | **Required.** The physical address of the vendor.                   |
+| `vendorCode`           | String | **Required.** A unique identifier for the vendor.                   |
+| `onTimeDeliveryRate`   | Number | **Optional.** Percentage of on-time deliveries by the vendor.       |
+| `qualityRatingAvg`     | Number | **Optional.** The average quality rating based on purchase orders.  |
+| `averageResponseTime`  | Number | **Optional.** The average time taken by the vendor to acknowledge purchase orders. |
+| `fulfillmentRate`      | Number | **Optional.** Percentage of purchase orders fulfilled successfully by the vendor. |
+
+**Example Request:**
+
+```json
+{
+  "name": "Vendor XYZ",
+  "contactDetails": "+1-234-567-890",
+  "address": "123 Vendor St, City, Country",
+  "vendorCode": "VEND123",
+  "onTimeDeliveryRate": 95.5,
+  "qualityRatingAvg": 4.7,
+  "averageResponseTime": 2.3,
+  "fulfillmentRate": 98.2
+}
+```
+
+**Response:**
+
+- **201 Created:** Vendor created successfully.
+- **400 Bad Request:** Invalid input or missing required fields.
+- **500 Internal Server Error:** Server error while processing the request.
+
+**Example Response:**
+
+```json
+{
+  "id": "abc123",
+  "name": "Vendor XYZ",
+  "vendorCode": "VEND123",
+  "status": "Vendor created successfully"
+}
+```
+
+---
+
+This documentation provides the necessary details for consuming the `POST /vendors` API, including request structure and example responses.
 
 ## License
 
